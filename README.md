@@ -56,7 +56,7 @@ You need Python 3.8 or above.
 
 ```bash
 # Clone the repo
-git clone https://github.com/PrashantJargad/vulnlab.git
+git clone https://github.com/PrashantJargad/Vulnerable_LAB.git
 cd vulnlab
 
 # Install dependencies

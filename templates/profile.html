@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title>VulnLab — Profile</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vulnerable_LAB<span class="blink">_</span></div>
+        <div class="nav-links">
+            <span><a href="{{ url_for('index') }}">Home</a></span>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+
+                        {% if is_own %}
+                        <div class="alert alert-success">
+                            ✅ This is your own profile.
+                        </div>
+                        {% else %}
+                        <div class="alert alert-danger">
+                            ⚠️ You are viewing someone else's profile — IDOR exploited!
+                        </div>
+                        {% endif %}
+
+                        <h5 class="card-title">User Profile</h5>
+
+                        <table class="table table-bordered mt-3">
+                            <tr>
+                                <th>ID</th>
+                                <td>{{ user['id'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ user['email'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Role</th>
+                                <td>{{ user['role'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Password</th>
+                                <td>
+                                    {% if is_own %}
+                                        {{ user['password'] }}
+                                    {% else %}
+                                        <!-- IDOR: exposes another user's plain-text password -->
+                                        <span class="text-danger">{{ user['password'] }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="mt-3">
+                            <a href="/profile/{{ user['id'] - 1 }}" class="btn btn-sm btn-outline-secondary">
+                                ← Previous user
+                            </a>
+                            <a href="/profile/{{ user['id'] + 1 }}" class="btn btn-sm btn-outline-secondary">
+                                Next user →
+                            </a>
+                            <a href="/" class="btn btn-sm btn-danger float-right">Home</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Shell</title>
+    <style>
+        body { background: #0d0d0d; color: #00ff00; font-family: monospace; padding: 20px; }
+        input { background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00; padding: 8px; width: 70%; font-family: monospace; }
+        button { background: #00ff00; color: #000; border: none; padding: 8px 16px; cursor: pointer; font-family: monospace; font-weight: bold; }
+        pre { background: #1a1a1a; border: 1px solid #333; padding: 14px; min-height: 100px; white-space: pre-wrap; word-break: break-all; }
+        h2 { color: #ff4444; }
+    </style>
+</head>
+<body>
+    <h2>⚠️ Web Shell — VulnLab Demo</h2>
+
+    <form method="GET">
+        <input type="text" name="cmd" placeholder="Enter JS payload e.g. document.cookie" 
+               value="{{ cmd }}">
+        <button type="submit">Execute</button>
+    </form>
+
+    <pre id="output"></pre>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const cmd = params.get('cmd');
+
+        if (cmd) {
+            try {
+                const result = eval(cmd);
+                document.getElementById('output').textContent = 
+                    'Result: ' + JSON.stringify(result, null, 2);
+            } catch(e) {
+                document.getElementById('output').textContent = 'Error: ' + e.message;
+            }
+        }
+    </script>
+
+    <hr style="border-color:#333; margin-top:20px">
+    <p style="color:#666; font-size:12px">Test payloads:</p>
+    <ul style="color:#888; font-size:12px">
+        <li><code>document.cookie</code> — steal session cookie</li>
+        <li><code>document.domain</code> — show domain</li>
+        <li><code>localStorage</code> — dump local storage</li>
+        <li><code>navigator.userAgent</code> — browser info</li>
+        <li><code>fetch('/admin').then(r=>r.text()).then(t=>document.getElementById('output').textContent=t)</code> — fetch admin page</li>
+    </ul>
+</body>
+</html>

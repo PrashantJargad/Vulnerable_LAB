@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnLab — XSS Training Range</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vulnerable_LAB<span class="blink">_</span></div>
+        <div class="nav-links">
+            <span><a href="{{ url_for('index') }}">Home</a></span>
+        </div>
+    </nav>
+
+    <main class="grid-container pt-5 mt-5">
+
+        <div class="card">
+            <div class="card-header">Level 1: Basic XSS</div>
+            <div class="card-body">
+                <form action="{{url_for('xss')}}" method="post">
+                    <div class="input-group">
+                        <label for="fname_l1">First name:</label>
+                        <input type="text" id="fname_l1" name="payload" value="John">
+                    </div>
+                    <input type="hidden" name="level" value="1">
+                    <input type="submit" value="Execute Payload" class="btn">
+
+                    {% if level == "1" %}
+                    <div class="result-box">{{result}}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Level 2: Input Tag Breakout</div>
+            <div class="card-body">
+                <form action="{{url_for('xss')}}" method="post">
+                    <div class="input-group">
+                        <label for="fname_l2">First name:</label>
+                        <input type="text" id="fname_l2" name="payload" value="John">
+                    </div>
+                    <input type="hidden" name="level" value="2">
+                    <input type="submit" value="Execute Payload" class="btn">
+
+                    {% if level == "2" %}
+                    <div class="result-box">
+                        <span class="muted">Hello, </span><input value="{{result}}">
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Level 3: Filter Evasion</div>
+            <div class="card-body">
+                <form action="{{url_for('xss')}}" method="post">
+                    <div class="input-group">
+                        <label for="fname_l3">First name:</label>
+                        <input type="text" id="fname_l3" name="payload" value="John">
+                    </div>
+                    <input type="hidden" name="level" value="3">
+                    <input type="submit" value="Execute Payload" class="btn">
+
+                    {% if level == "3" %}
+                    <div class="result-box">{{result}}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Level 4: Attribute Breakout</div>
+            <div class="card-body">
+                <form action="{{url_for('xss')}}" method="post">
+                    <div class="input-group">
+                        <label for="filename_l4">Enter image filename:</label>
+                        <input type="text" id="filename_l4" name="payload" value="default.jpg">
+                    </div>
+                    <input type="hidden" name="level" value="4">
+                    <input type="submit" value="Load Image" class="btn">
+
+                    {% if level == "4" %}
+                    <div class="result-box">
+                        <p class="muted">Image Preview:</p>
+                        <img src="{{ result | safe }}" alt="preview">
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Level 5: JS String Breakout</div>
+            <div class="card-body">
+                <form action="{{url_for('xss')}}" method="post">
+                    <div class="input-group">
+                        <label for="username_l5">Set your username:</label>
+                        <input type="text" id="username_l5" name="payload" value="Guest">
+                    </div>
+                    <input type="hidden" name="level" value="5">
+                    <input type="submit" value="Set Username" class="btn">
+
+                    {% if level == "5" %}
+                    <div class="result-box">
+                        <p class="muted">Username set! Check the script execution.</p>
+                        <script>
+                            var currentUsername = "{{ result | safe }}";
+                            console.log("Welcome to the system, " + currentUsername);
+                        </script>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>

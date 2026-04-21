@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnLab — Main Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vulnerable_LAB<span class="blink">_</span></div>
+        <div class="nav-links">
+            <span>root@localhost:~# ./launch_lab</span>
+        </div>
+    </nav>
+
+    <main class="vertical-container">
+
+        <div class="vuln-card">
+            <img class="vuln-image" src="{{ url_for('static', filename='/images/xss-cover.png') }}" alt="Cross-Site Scripting">
+            
+            <div class="vuln-content">
+                <h2>Cross-Site Scripting (XSS)</h2>
+                <p>Explore 5 distinct levels of Cross-Site Scripting. Test your ability to bypass filters, break out of HTML attributes, and escape JavaScript contexts.</p>
+                <a href="{{ url_for('xss') }}" class="btn">Visit</a>
+            </div>
+        </div>
+
+        <div class="vuln-card">
+            <img class="vuln-image" src="{{ url_for('static', filename='images/idor-cover.jpg') }}" alt="Insecure Direct Object Reference" style="max-width: 100%; height: auto;">
+            
+            <div class="vuln-content">
+                <h2>Insecure Direct Object Reference (IDOR)</h2>
+                <p>Exploit broken access controls. Manipulate database IDs, intercept requests, and hijack sessions to view restricted user data.</p>
+                <a href="{{ url_for('profile', user_id=id)}}" class="btn">Visit</a>
+            </div>
+        </div>
+
+        <div class="vuln-card">
+            <img class="vuln-image" src="{{ url_for('static', filename='images/sqli-cover.png') }}" alt="SQL Injection">
+            
+            <div class="vuln-content">
+                <h2>SQL Injection (SQLi)</h2>
+                <p>Exploit vulnerable queries to bypass authentication. Inject raw SQL commands to manipulate backend logic and expose hidden records.</p>
+                <a href="{{ url_for('login') }}" class="btn">Visit</a>
+            </div>
+        </div>
+
+        <div class="vuln-card">
+            <img class="vuln-image" src="{{ url_for('static', filename='images/upload-cover.png') }}" alt="Unrestricted File Upload">
+            
+            <div class="vuln-content">
+                <h2>Unrestricted File Upload</h2>
+                <p>Bypass server-side filters. Upload malicious payloads to execute remote code and compromise the underlying web server.</p>
+                <a href="{{ url_for('upload') }}" class="btn">Visit</a>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>

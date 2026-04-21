@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnLab — File Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Vulnerable_LAB<span class="blink">_</span></div>
+        <div class="nav-links">
+            <span><a href="{{ url_for('index') }}">Home</a></span>
+        </div>
+    </nav>
+
+    <main class="grid-container" style="display: flex; justify-content: center; padding-top: 4rem;">
+        
+        <div class="card" style="width: 100%; max-width: 600px;">
+            <div class="card-header">Level: Unrestricted File Upload</div>
+            <div class="card-body">
+                <p class="muted" style="margin-bottom: 1.5rem;">Upload a payload to the server. No extension filtering or MIME-type validation is currently active.</p>
+                
+                <form method="POST" action="" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <label for="file_upload">Select File:</label>
+                        <input type="file" id="file_upload" name="file" class="file-input" required>
+                    </div>
+                    <input type="submit" value="Execute Upload" class="btn">
+                </form>
+
+                {% if uploaded_file %}
+                <div class="result-box" style="margin-top: 2rem;">
+                    <span class="muted">[+] File Uploaded Successfully!</span><br>
+                    <span class="muted">[+] Access Point:</span> 
+                    <a href="{{ url_for('static', filename='uploads/' ~ uploaded_file) }}" target="_blank" style="color: var(--neon-green); text-decoration: none; font-weight: bold;">
+                        {{ uploaded_file }}
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>

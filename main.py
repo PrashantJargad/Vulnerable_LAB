@@ -177,7 +177,7 @@ def upload():
 
     if request.method == 'POST':
         file = request.files['file']
-
+s
         if file.filename == '':
             return "No File Selected!"
 
